@@ -27,12 +27,11 @@ class ChromeCastController(
     private val channel = MethodChannel(messenger, "flutter_cast_video/chromeCast_$viewId")
     private val chromeCastButton =
         MediaRouteButton(ContextThemeWrapper(context, R.style.ChromecastCustomStyle))
-    private val sessionManager: SessionManager? = CastContext.getSharedInstance()?.sessionManager
+    private val sessionManager = CastContext.getSharedInstance()?.sessionManager
     private val remoteMediaClient get() = sessionManager?.currentCastSession?.remoteMediaClient
     private val progressListenerInterval = 100L
 
     init {
-        sessionManager?.castOptions?.castMediaOptions?.setMediaSessionEnabled(false)
         CastButtonFactory.setUpMediaRouteButton(context as Context, chromeCastButton)
         channel.setMethodCallHandler(this)
     }
